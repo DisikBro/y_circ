@@ -28,7 +28,7 @@ class App(QWidget, Ui_Form):
             qp.setBrush(QColor(random.randint(0, 0xffffff)))
             qp.drawEllipse(rect)
             qp.end()
-            self.draw = False`
+            self.draw = False
 
 
 def except_hook(cls, exception, traceback):
