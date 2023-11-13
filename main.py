@@ -4,13 +4,14 @@ import sys
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QWidget, QApplication
-from PyQt5 import uic
+
+from UI import Ui_Form
 
 
-class App(QWidget):
+class App(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.circle)
         self.draw = False
 
@@ -19,14 +20,15 @@ class App(QWidget):
         self.repaint()
 
     def paintEvent(self, pe) -> None:
-        qp = QPainter()
-        qp.begin(self)
-        d = random.randint(1, min(self.width(), self.height()))
-        rect = QRect(random.randint(0, self.width() - d), random.randint(0, self.height() - d), d, d)
-        qp.setBrush(QColor('yellow'))
-        qp.drawEllipse(rect)
-        qp.end()
-        self.draw = False
+        if self.draw:
+            qp = QPainter()
+            qp.begin(self)
+            d = random.randint(1, min(self.width(), self.height()))
+            rect = QRect(random.randint(0, self.width() - d), random.randint(0, self.height() - d), d, d)
+            qp.setBrush(QColor(random.randint(0, 0xffffff)))
+            qp.drawEllipse(rect)
+            qp.end()
+            self.draw = False`
 
 
 def except_hook(cls, exception, traceback):
